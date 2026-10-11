@@ -1,6 +1,6 @@
-# deadalyze
+# DEADBEA7
 
-deadalyze is the DJ track analysis bundle behind DEADCA7 and deadcatalog. It
+DEADBEA7 is the DJ track analysis bundle behind DEADCA7 and deadcatalog. It
 takes an audio file and answers what a DJ app needs to play it: the beat grid
 (BPM, every beat, bar 1), the musical key, waveforms, hot cues, a feature
 blob, stems and an embedding. One Rust engine runs the model legs and speaks
@@ -52,7 +52,7 @@ they are made. On an M-series Mac a track takes about 5 seconds in a batch.
 The runtime is a GitHub release of this repository, tag `ml-vX.Y.Z`, one
 archive per platform (`darwin/arm64`, `linux/amd64`, about 1.7 GB and
 1.9 GB) plus `checksums.txt` and `manifest.json`. A host fetches
-`https://github.com/csquared/deadalyze/releases/latest/download/manifest.json`,
+`https://github.com/csquared/DEADBEA7/releases/latest/download/manifest.json`,
 downloads its platform's asset, checks the sha256, extracts it and runs the
 engine the bundle manifest names (`bin/engine`). The hosts already do this:
 
@@ -64,7 +64,7 @@ dc runtime install                 # deadcatalog, into ~/Library/Application Sup
 By hand:
 
 ```sh
-curl -LO https://github.com/csquared/deadalyze/releases/latest/download/deadca7-ml-darwin-arm64.tar.gz
+curl -LO https://github.com/csquared/DEADBEA7/releases/latest/download/deadca7-ml-darwin-arm64.tar.gz
 tar xzf deadca7-ml-darwin-arm64.tar.gz
 export DEADCA7_BUNDLE=$PWD/deadca7-ml-darwin-arm64
 ```
@@ -129,7 +129,7 @@ singly. `docs/engine-protocol.md` has every event and field;
 ### Go
 
 ```go
-import "github.com/csquared/deadalyze/client"
+import "github.com/csquared/DEADBEA7/client"
 
 eng, err := client.Resolve() // DEADCA7_BUNDLE, DEADCATALOG_RUNTIME, then the installed runtime
 if err != nil { return err }
