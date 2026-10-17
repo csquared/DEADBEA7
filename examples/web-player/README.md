@@ -11,8 +11,9 @@ source: https://github.com/csquared/sayless).
 1. Each lossless master is encoded to an AAC-LC 160 kbps `.m4a` stream
    (ffmpeg's built-in `aac`, `-movflags +faststart`, 44.1 or 48 kHz).
 2. `deadbea7 analyze -tasks grid,key,waveform -waveforms three_band_preview
-   MASTER...` runs on the masters, not the m4a streams, and prints one JSON
-   object per file in input order.
+   MASTER...` runs on the masters, not the m4a streams (one of the engine's
+   grid legs can't open m4a), and prints one JSON object per file in input
+   order.
 3. `build-playlist.sh` writes `playlist.json` from that: title, description,
    soundcloud, and one track per master with audio, duration, BPM, key and
    waveform.
