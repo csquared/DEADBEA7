@@ -7,6 +7,7 @@ GRIDS ?= $(HOME)/grids
 test:
 	go vet ./... && go test ./...
 	bash -n bundle/build.sh
+	bash -n examples/web-player/build-playlist.sh examples/web-player/test.sh
 
 install:
 	go install ./cmd/deadbea7

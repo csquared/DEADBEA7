@@ -1,0 +1,17 @@
+{
+  "title": "Example playlist",
+  "description": "Two placeholder tracks for the web player example",
+  "soundcloud": "",
+  "tracks": [
+    {
+      "slug": "track-one",
+      "title": "Track One",
+      "source": "masters/track-one.wav"
+    },
+    {
+      "slug": "track-two",
+      "title": "Track Two",
+      "source": "masters/track-two.wav"
+    }
+  ]
+}

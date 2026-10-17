@@ -130,6 +130,10 @@ deadbea7 analyze -waveforms three_band_preview track.m4a | jq '{bpm, key: .key.c
 the grid, key, selected waveform blobs and any errors; it exits 1 if any
 file failed.
 
+## Examples
+
+- [examples/web-player/](examples/web-player/): a SoundCloud-style web player: `deadbea7 analyze` turns masters into a playlist with three-band waveforms, BPM and key; live on the SAYLESS press kit (https://justsayless.xyz/presskit.html).
+
 ## Call it from your app
 
 The host starts the engine as a child process with the bundle root as the
