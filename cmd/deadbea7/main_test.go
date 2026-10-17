@@ -112,6 +112,7 @@ func TestCollectorWaveformFilter(t *testing.T) {
 func TestCollectorItemError(t *testing.T) {
 	out, c := collect(t, []string{"bad.mp3"}, &analyzeOptions{},
 		client.Event{Event: client.ItemError, ID: "0", Task: client.TaskGrid, Code: "grid_failed", Message: "boom"},
+		client.Event{Event: client.ItemDone, ID: "0", Tasks: map[string]string{client.TaskGrid: "failed"}},
 	)
 	got := lines(t, out)
 	if len(got) != 1 || got[0]["ok"] != false {
@@ -205,5 +206,22 @@ func TestParseAnalyzeFlags(t *testing.T) {
 	}
 	if !opts.wavAll {
 		t.Fatalf("-waveforms all not parsed: %+v", opts)
+	}
+}
+
+func TestCollectorMissingItemDone(t *testing.T) {
+	out, c := collect(t, []string{"a.m4a", "b.m4a"}, &analyzeOptions{},
+		client.Event{Event: client.ItemDone, ID: "0"},
+	)
+	got := lines(t, out)
+	if len(got) != 2 || got[0]["ok"] != true || got[1]["ok"] != false {
+		t.Fatalf("want a ok, b failed; got %v", got)
+	}
+	errs := got[1]["errors"].([]any)
+	if len(errs) != 1 || errs[0].(map[string]any)["code"] != "no_result" {
+		t.Fatalf("b errors = %v", errs)
+	}
+	if c.exitCode() != 1 {
+		t.Fatalf("exit = %d, want 1", c.exitCode())
 	}
 }

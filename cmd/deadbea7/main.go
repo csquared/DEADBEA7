@@ -354,8 +354,8 @@ func (c *collector) addError(i int, task, code, message string) {
 }
 
 // finish ends the run. A batch failure marks every file not yet printed
-// with ok:false and a batch error; every remaining file is then flushed in
-// input order.
+// with ok:false and a batch error, and so does a file the engine never
+// finished; every remaining file is then flushed in input order.
 func (c *collector) finish(err error) {
 	code, message := "", ""
 	switch {
@@ -364,14 +364,14 @@ func (c *collector) finish(err error) {
 	case err != nil:
 		code, message = "engine_crashed", err.Error()
 	}
-	if code != "" {
-		for i := range c.items {
-			if !c.printed[i] {
-				c.addError(i, "batch", code, message)
-			}
-		}
-	}
 	for i := range c.items {
+		switch {
+		case c.printed[i]:
+		case code != "":
+			c.addError(i, "batch", code, message)
+		case !c.ready[i]:
+			c.addError(i, "batch", "no_result", "the engine ended without item_done for this file")
+		}
 		c.ready[i] = true
 	}
 	c.flush()
