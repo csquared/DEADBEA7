@@ -2,11 +2,14 @@
 
 GRIDS ?= $(HOME)/grids
 
-.PHONY: test bundle bundle-inspect corpus-stats grideval grideval-fresh pins
+.PHONY: test bundle bundle-inspect corpus-stats grideval grideval-fresh pins install
 
 test:
 	go vet ./... && go test ./...
 	bash -n bundle/build.sh
+
+install:
+	go install ./cmd/deadbea7
 
 # The runners here, deadcatalog's embedded copies and DEADCA7's Swift literals
 # all hash the same; this is the check.

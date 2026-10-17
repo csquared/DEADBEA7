@@ -115,6 +115,21 @@ go run ./cmd/waveeval -export ~/rb-usb      # waveforms against a rekordbox USB 
 ./bundle/build.sh                           # build the archive for this machine
 ```
 
+## Command line: deadbea7
+
+`cmd/deadbea7` is a small command line over the Go client: describe the
+installed bundle, or analyse files and read the answers as JSON Lines.
+
+```sh
+make install
+deadbea7 describe | jq .tasks
+deadbea7 analyze -waveforms three_band_preview track.m4a | jq '{bpm, key: .key.camelot}'
+```
+
+`deadbea7 analyze` prints one JSON object per file, in input order, with
+the grid, key, selected waveform blobs and any errors; it exits 1 if any
+file failed.
+
 ## Call it from your app
 
 The host starts the engine as a child process with the bundle root as the
@@ -129,7 +144,7 @@ singly. `docs/engine-protocol.md` has every event and field;
 ### Go
 
 ```go
-import "github.com/csquared/DEADBEA7/client"
+import "github.com/csquared/deadalyze/client"
 
 eng, err := client.Resolve() // DEADCA7_BUNDLE, DEADCATALOG_RUNTIME, then the installed runtime
 if err != nil { return err }
