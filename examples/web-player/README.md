@@ -2,9 +2,10 @@
 
 A SoundCloud-style web player built with DEADBEA7. `deadbea7 analyze` turns
 lossless masters into a playlist with BPM, key and three-band waveforms, and
-`player.js` and `player.css` draw and play it. It is the player on the
-SAYLESS press kit, live at https://justsayless.xyz/presskit.html (site
-source: https://github.com/csquared/sayless).
+`player.js` and `player.css` draw and play it. It was built for the SAYLESS
+press kit.
+
+![The web player: cover, play button, three-band waveform, tracklist with BPM and key](screenshot.png)
 
 ## How it works
 
@@ -51,6 +52,7 @@ around the centre line: low nearest the centre, then mid, then high.
 - `player.css` - the player styles
 - `index.html` - a minimal page for the player
 - `sample-playlist.json` - a playlist with synthetic waveforms
+- `screenshot.png` - the player on the SAYLESS press kit
 
 ## Test
 

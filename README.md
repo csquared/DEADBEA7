@@ -132,7 +132,9 @@ file failed.
 
 ## Examples
 
-- [examples/web-player/](examples/web-player/): a SoundCloud-style web player: `deadbea7 analyze` turns masters into a playlist with three-band waveforms, BPM and key; live on the SAYLESS press kit (https://justsayless.xyz/presskit.html).
+- [examples/web-player/](examples/web-player/): a SoundCloud-style web player: `deadbea7 analyze` turns masters into a playlist with three-band waveforms, BPM and key, built for the SAYLESS press kit.
+
+  <img src="examples/web-player/screenshot.png" alt="The web player" width="480">
 
 ## Call it from your app
 
