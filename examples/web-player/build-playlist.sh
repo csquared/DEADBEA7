@@ -112,12 +112,14 @@ jq -n \
     --slurpfile tracks "$TRACKS" \
     --slurpfile a "$analyze_log" \
     '{ title: $tracks[0].title,
+       artist: (($tracks[0].artist) // ""),
        description: $tracks[0].description,
        soundcloud: $tracks[0].soundcloud,
        tracks: [ range(0; ($tracks[0].tracks | length)) as $i |
          { n: ($i + 1),
            slug: $tracks[0].tracks[$i].slug,
            title: $tracks[0].tracks[$i].title,
+           artist: (($tracks[0].tracks[$i].artist) // ""),
            audio: ("stream/" + $tracks[0].tracks[$i].slug + ".m4a"),
            duration_ms: $a[$i].duration_ms,
            bpm: $a[$i].bpm,

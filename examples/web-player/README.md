@@ -15,9 +15,11 @@ press kit.
    MASTER...` runs on the masters, not the m4a streams (one of the engine's
    grid legs can't open m4a), and prints one JSON object per file in input
    order.
-3. `build-playlist.sh` writes `playlist.json` from that: title, description,
-   soundcloud, and one track per master with audio, duration, BPM, key and
-   waveform.
+3. `build-playlist.sh` writes `playlist.json` from that: title, artist,
+   description, soundcloud, and one track per master with title, artist,
+   audio, duration, BPM, key and waveform. A track's `artist` overrides the
+   playlist's; leave the playlist's empty for a various-artists list. The
+   cover shows the playlist artist, or the title when there is none.
 4. `player.js` fetches `playlist.json`, draws each track's waveform on a
    canvas and plays the streams with one `<audio>` element.
 
