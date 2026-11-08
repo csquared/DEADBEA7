@@ -1,5 +1,6 @@
 {
   "title": "Example playlist",
+  "artist": "Example Artist",
   "description": "Two placeholder tracks for the web player example",
   "soundcloud": "",
   "tracks": [
@@ -11,6 +12,7 @@
     {
       "slug": "track-two",
       "title": "Track Two",
+      "artist": "Example Artist & Guest",
       "source": "masters/track-two.wav"
     }
   ]

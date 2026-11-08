@@ -57,10 +57,21 @@
         return node;
     }
 
-    function makeCover() {
+    function makeCover(playlist) {
         var cover = el("div", "sp-cover");
-        cover.appendChild(el("div", "sp-cover-text", "SAYLESS"));
+        cover.appendChild(el("div", "sp-cover-text", playlist.artist || playlist.title || ""));
         return cover;
+    }
+
+    // The artist of a track: its own artist, else the playlist's.
+    function artistOf(playlist, track) {
+        return (track && track.artist) || playlist.artist || "";
+    }
+
+    // "Artist \u2013 Title", or just the title when there is no artist.
+    function displayName(playlist, track) {
+        var artist = artistOf(playlist, track);
+        return artist ? artist + " \u2013 " + track.title : track.title;
     }
 
     function render(root, playlist) {
@@ -79,7 +90,7 @@
         root.appendChild(top);
 
         var header = el("div", "sp-header");
-        header.appendChild(makeCover());
+        header.appendChild(makeCover(playlist));
 
         var controls = el("div", "sp-controls");
         var playBtn = el("button", "sp-play", null);
@@ -89,7 +100,8 @@
         controls.appendChild(playBtn);
 
         var titles = el("div", "sp-titles");
-        titles.appendChild(el("div", "sp-artist", "SAYLESS"));
+        var artistLine = el("div", "sp-artist", "");
+        titles.appendChild(artistLine);
         var trackTitle = el("div", "sp-track-title", "");
         titles.appendChild(trackTitle);
         controls.appendChild(titles);
@@ -140,10 +152,10 @@
             var row = el("button", "sp-row");
             row.type = "button";
             row.setAttribute("role", "button");
-            row.setAttribute("aria-label", (track.n || i + 1) + " SAYLESS - " + track.title);
+            row.setAttribute("aria-label", (track.n || i + 1) + " " + displayName(playlist, track));
 
             var left = el("span", "sp-row-left");
-            left.appendChild(el("span", "sp-row-name", (track.n || i + 1) + " \u00b7 SAYLESS \u2013 " + track.title));
+            left.appendChild(el("span", "sp-row-name", (track.n || i + 1) + " \u00b7 " + displayName(playlist, track)));
             row.appendChild(left);
 
             var right = el("span", "sp-row-right");
@@ -163,6 +175,7 @@
         var state = {
             audio: audio,
             playBtn: playBtn,
+            artistLine: artistLine,
             trackTitle: trackTitle,
             elapsedLabel: elapsedLabel,
             totalLabel: totalLabel,
@@ -189,6 +202,7 @@
             if (i < 0 || i >= tracks.length) return;
             state.selectedIndex = i;
             var track = tracks[i];
+            state.artistLine.textContent = artistOf(playlist, track);
             state.trackTitle.textContent = track.title;
             state.totalLabel.textContent = formatTime(track.duration_ms);
             state.elapsedLabel.textContent = "0:00";
@@ -394,7 +408,7 @@
 
         function setupMediaSession() {
             if (!("mediaSession" in navigator)) return;
-            var md = { title: "", artist: "SAYLESS", album: playlist.title || "" };
+            var md = { title: "", artist: playlist.artist || "", album: playlist.title || "" };
             try {
                 navigator.mediaSession.metadata = new MediaMetadata(md);
             } catch (err) {
@@ -405,7 +419,7 @@
                 try {
                     navigator.mediaSession.metadata = new MediaMetadata({
                         title: track ? track.title : "",
-                        artist: "SAYLESS",
+                        artist: artistOf(playlist, track),
                         album: playlist.title || ""
                     });
                 } catch (err) {}
